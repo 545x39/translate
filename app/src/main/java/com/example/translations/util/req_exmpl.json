@@ -1,0 +1,18 @@
+{
+  "sourceLanguageCode": "string",
+  "targetLanguageCode": "string",
+  "texts": [
+    "string"
+  ],
+  "glossaryConfig": {
+    "glossaryData": {
+      "glossaryPairs": [
+        {
+          "sourceText": "string",
+          "translatedText": "string"
+        }
+      ]
+    }
+  },
+  "speller": true
+}
