@@ -1,9 +1,9 @@
 package com.example.translations.di.module
 
-import com.example.translations.data.repository.implementation.DictionaryRepositoryImpl
-import com.example.translations.data.repository.implementation.LanguageRepositoryImpl
-import com.example.translations.domain.repository.abstraction.DictionaryRepository
-import com.example.translations.domain.repository.abstraction.LanguageRepository
+import com.example.translations.data.repository.DictionaryRepositoryImpl
+import com.example.translations.data.repository.LanguageRepositoryImpl
+import com.example.translations.domain.repository.DictionaryRepository
+import com.example.translations.domain.repository.LanguageRepository
 import dagger.Binds
 import dagger.Module
 

@@ -21,17 +21,12 @@ class LanguageAdapter(private val context: Context) : BaseAdapter() {
 
     override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
 
-        fun View.setText() = this.apply {
-            view.apply {
-                findViewById<TextView>(R.id.value_text).text = languages[position].name
-            }
-        }
+        fun View.setText() =
+            this.apply { findViewById<TextView>(R.id.value_text).text = languages[position].name }
 
-        return when (view) {
-            null -> (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
+        return view?.setText()
+            ?: (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
                 .inflate(R.layout.row_simple_list_layout, viewGroup, false)
                 .setText()
-            else -> view.setText()
-        }
     }
 }

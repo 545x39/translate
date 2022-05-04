@@ -11,21 +11,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dictionary.R
 import com.example.dictionary.di.DaggerDictionaryComponent
-import com.example.dictionary.domain.usecase.event.implementation.data.DataEvent
-import com.example.dictionary.domain.usecase.event.implementation.view.ViewEvent
-import com.example.dictionary.domain.usecase.factory.abstraction.UseCaseFactory
+import com.example.dictionary.domain.usecase.event.data.DataEvent
+import com.example.dictionary.domain.usecase.event.view.ViewEvent
+import com.example.dictionary.domain.usecase.factory.UseCaseFactory
 import com.example.dictionary.framework.presentation.ui.adapter.DictionaryAdapter
 import com.example.dictionary.framework.presentation.ui.adapter.LanguageAdapter
 import com.example.translations.App
 import com.example.translations.domain.entity.DictionaryEntry
 import com.example.translations.domain.entity.Language
 import com.example.translations.domain.usecase.event.Error
-import com.example.translations.domain.usecase.event.abstraction.Event
+import com.example.translations.domain.usecase.event.Event
 import com.example.translations.framework.presentation.ui.MainActivity
-import com.example.translations.util.LanguageCode.ENGLISH
-import com.example.translations.util.LanguageCode.RUSSIAN
 import com.example.translations.util.ifTrue
-import com.example.translations.util.rx.RxBus
+import com.example.translations.util.RxBus
 import com.jakewharton.rxbinding4.appcompat.queryTextChanges
 import com.jakewharton.rxbinding4.view.clicks
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers.mainThread
@@ -41,7 +39,6 @@ import javax.inject.Inject
 
 class DictionaryFragment : Fragment() {
 
-    //<editor-fold defaultstate="collapsed" desc="FIELDS">
     private val compositeDisposable = CompositeDisposable()
 
     private val switchObservable = PublishSubject.create<Boolean>()
@@ -76,13 +73,8 @@ class DictionaryFragment : Fragment() {
 
     private var toLanguage: Language? = null
 
-//    private lateinit var searchView: SearchView
-    //</editor-fold>
-
-    //<editor-fold defaultstate="collapsed" desc="EVENT HANDLERS">
     private fun handleEvent(event: Event) {
         when (event) {
-            //Events
             is DataEvent.Loading -> showProgress(true)
             is DataEvent.Failure -> onError(event)
             is DataEvent.LanguagesLoaded -> onLanguagesLoaded(event.languages)
@@ -90,7 +82,6 @@ class DictionaryFragment : Fragment() {
             is DataEvent.TranslationCompleted -> onTranslationComplete(event.translation)
             is DataEvent.QuerySaved -> reloadDictionary()
             is DataEvent.EntryDeleted -> reloadDictionary()
-            //Actions
             is ViewEvent.GetLanguages -> factory.getLanguagesUseCase().execute()
             is ViewEvent.Translate -> onTranslate(event)
             is ViewEvent.GetDictionary -> factory.getDictionaryUseCase(event.query).execute()
@@ -136,19 +127,15 @@ class DictionaryFragment : Fragment() {
             addAll(languages)
         }
         (fromLanguage == null).ifTrue {
-            languages.map {
-                if (it.code == RUSSIAN) {
-                    fromLanguage = it
-                    fromLanguageSpinner.setSelection(it.id.toInt() - 1)
-                }
+            languages.find { it.code == "ru" }?.let {
+                fromLanguage = it
+                fromLanguageSpinner.setSelection(it.id.toInt() - 1)
             }
         }
         (toLanguage == null).ifTrue {
-            languages.map {
-                if (it.code == ENGLISH) {
-                    toLanguage = it
-                    toLanguageSpinner.setSelection(it.id.toInt() - 1)
-                }
+            languages.find { it.code == "en" }?.let {
+                toLanguage = it
+                toLanguageSpinner.setSelection(it.id.toInt() - 1)
             }
         }
         languageAdapter.notifyDataSetChanged()
@@ -166,9 +153,7 @@ class DictionaryFragment : Fragment() {
             }
         )
     }
-//</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="LIFECYCLE METHODS">
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -274,5 +259,4 @@ class DictionaryFragment : Fragment() {
         super.onDestroy()
         compositeDisposable.dispose()
     }
-//</editor-fold>
 }

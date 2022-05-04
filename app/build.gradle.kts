@@ -16,19 +16,16 @@ import dependencies.Versions.ROOM_VERSION
 import dependencies.Versions.RX_ANDROID_VERSION
 import dependencies.Versions.RX_JAVA_VERSION
 import dependencies.Versions.TIMBER_VERSION
-//<editor-fold defaultstate="collapsed" desc="PLUGINS">
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
 }
-//</editor-fold>
 
-
-//<editor-fold defaultstate="collapsed" desc="ANDROID">
 android {
 
-    //<editor-fold defaultstate="collapsed" desc="DEFAULT CONFIG">
     defaultConfig {
         applicationId = APPLICATION_ID
         minSdk = MIN_SDK
@@ -37,69 +34,59 @@ android {
         versionName = VERSION_NAME
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         compileSdk = COMPILE_SDK
+        buildConfigField("String","API_KEY", gradleLocalProperties(rootDir).getProperty("API_KEY"))
     }
-    //</editor-fold">
 
-    //<editor-fold defaultstate="collapsed" desc="BUILD TYPES">
     buildTypes {
         release {
+            isDebuggable = false
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+        }
     }
-    //</editor-fold">
 
-    //<editor-fold defaultstate="collapsed" desc="COMPILE OPTIONS">
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    //</editor-fold">
 
     kotlinOptions {
         jvmTarget = "1.8"
     }
     dynamicFeatures += setOf(":dictionary", ":favorite")
-
-//    setDynamicFeatures(setOf(":map", ":search", ":settings", ":objectdetails"))
-//    dynamicFeatures += setOf(":tracker")
-
 }
-//</editor-fold>
+
 
 dependencies {
-    /** VIEW MODEL AND LIVE DATA */
     api("androidx.lifecycle:lifecycle-extensions:$LIFECYCLE_VERSION")
-    /** DAGGER */
     api("com.google.dagger:dagger:$DAGGER_VERSION")
     kapt("com.google.dagger:dagger-compiler:$DAGGER_VERSION")
     kapt("com.google.dagger:dagger-android-processor:$DAGGER_VERSION")
-    /** RX JAVA */
     api("io.reactivex.rxjava3:rxjava:$RX_JAVA_VERSION")
     api("io.reactivex.rxjava3:rxandroid:$RX_ANDROID_VERSION")
-    /** NAVIGATION COMPONENT */
     api("androidx.navigation:navigation-fragment-ktx:$NAVIGATION_VERSION")
     api("androidx.navigation:navigation-ui-ktx:$NAVIGATION_VERSION")
     api("androidx.navigation:navigation-dynamic-features-fragment:$NAVIGATION_VERSION")
-    /** RETROFIT */
     implementation("com.squareup.retrofit2:retrofit:$RETROFIT_VERSION")
     implementation("com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION")
     implementation("com.squareup.okhttp3:logging-interceptor:$INTERCEPTOR_VERSION")
     implementation("com.squareup.retrofit2:converter-scalars:$RETROFIT_VERSION")
     implementation("com.squareup.retrofit2:adapter-rxjava3:$RETROFIT_VERSION")
-    /** GSON */
     implementation("com.google.code.gson:gson:$GSON_VERSION")
-    /** TIMBER */
     api("com.jakewharton.timber:timber:$TIMBER_VERSION")
-    /** ROOM */
     implementation("androidx.room:room-runtime:$ROOM_VERSION")
     kapt("androidx.room:room-compiler:$ROOM_VERSION")
     implementation("androidx.room:room-ktx:$ROOM_VERSION")
     implementation("androidx.room:room-rxjava3:$ROOM_VERSION")
-    ////
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")

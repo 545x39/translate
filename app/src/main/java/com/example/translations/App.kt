@@ -21,8 +21,7 @@ class App : Application() {
     private fun initAppComponent() {
         appComponent = DaggerAppComponent
             .factory()
-            .create(AppModule(this))
-            .also { it.inject(this) }
+            .create(AppModule(baseContext))
     }
 
     private fun initTimber() {

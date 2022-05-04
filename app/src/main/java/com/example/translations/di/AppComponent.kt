@@ -1,10 +1,9 @@
 package com.example.translations.di
 
-import android.content.Context
 import com.example.translations.di.module.*
-import com.example.translations.domain.repository.abstraction.DictionaryRepository
-import com.example.translations.domain.repository.abstraction.LanguageRepository
-import com.example.translations.util.rx.RxBus
+import com.example.translations.domain.repository.DictionaryRepository
+import com.example.translations.domain.repository.LanguageRepository
+import com.example.translations.util.RxBus
 import dagger.Component
 import javax.inject.Singleton
 
@@ -19,8 +18,6 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent {
-
-    fun inject(app: Context)
 
     fun getLanguageRepository(): LanguageRepository
 

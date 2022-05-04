@@ -27,7 +27,6 @@ android {
 
 dependencies {
     implementation(project(":app"))
-    /** DAGGER */
     kapt("com.google.dagger:dagger-compiler:$DAGGER_VERSION")
     kapt("com.google.dagger:dagger-android-processor:$DAGGER_VERSION")
     implementation("androidx.core:core-ktx:1.7.0")

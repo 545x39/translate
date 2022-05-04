@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dictionary.R
-import com.example.dictionary.domain.usecase.event.implementation.view.ViewEvent
+import com.example.dictionary.domain.usecase.event.view.ViewEvent
 import com.example.translations.domain.entity.DictionaryEntry
 import com.example.translations.domain.entity.Language
-import com.example.translations.util.rx.RxBus
-import timber.log.Timber
+import com.example.translations.util.RxBus
 
 class DictionaryAdapter(
     private val rxBus: RxBus,
