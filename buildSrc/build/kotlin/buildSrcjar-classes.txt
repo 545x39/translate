@@ -1,0 +1,1 @@
+/home/d/StudioProjects/translate/buildSrc/build/classes/kotlin/main/dependencies/Application.class:/home/d/StudioProjects/translate/buildSrc/build/classes/kotlin/main/dependencies/Versions.class

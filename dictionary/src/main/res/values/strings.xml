@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_unknown">Unknown error occurred.</string>
+    <string name="error_languages_not_loaded">Could not load languages.</string>
+    <string name="error_translation_not_found">Translation not found.</string>
+    <string name="error_source_language_not_found">Source language not found.</string>
+    <string name="search">Search</string>
+<!--    <string name="translate">Translate</string>-->
+</resources>
